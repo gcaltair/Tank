@@ -15,10 +15,11 @@ public class PlayerManager : MonoBehaviour {
 
     //引用
     public GameObject born;
+    public GameObject new_background;
     public Text playerScoreText;
     public Text PlayerLifeValueText;
     public GameObject isDefeatUI;
-
+    public GameObject winUI;
     //单例
     private static PlayerManager instance;
 
@@ -47,10 +48,11 @@ public class PlayerManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+       
         if (isDefeat)
         {
             isDefeatUI.SetActive(true);
-            Invoke("ReturnToTheMainMenu", 3);
+            Invoke("ReturnToTheMainMenu",3);
             return;
         }
         if (isDead)
@@ -59,7 +61,14 @@ public class PlayerManager : MonoBehaviour {
         }
         playerScoreText.text = playerScore.ToString();
         PlayerLifeValueText.text = lifeValue.ToString();
-	}
+        if (playerScore == 20)
+        {
+            winUI.SetActive(true);
+            new_background.SetActive(true);
+            Invoke("ReturnToTheMainMenu", 3);
+            return;
+        }
+    }
 
     private void Recover()
     {
@@ -80,6 +89,7 @@ public class PlayerManager : MonoBehaviour {
 
     private void ReturnToTheMainMenu()
     {
-        SceneManager.LoadScene(0);
+       
+        SceneManager.LoadScene(0);Time.timeScale = 1;
     }
 }
